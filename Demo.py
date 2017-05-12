@@ -589,6 +589,22 @@ class robotGame():
         cube_pose_z = self.cubes_pose.pose[0].position.z
         self.cube_pose_lock.release()
         return [cube_pose_x, cube_pose_y, cube_pose_z]
+    def getState(self):
+        self.joints_lock.acquire()
+        self.gripper_pose_lock.acquire()
+        self.cube_pose_lock.acquire()
+        joint_pos=self.joint_positions
+        gripper_pose_x = self.grippers_pose.pose[0].position.x
+        gripper_pose_y = self.grippers_pose.pose[0].position.y
+        gripper_pose_z = self.grippers_pose.pose[0].position.z
+        cube_pose_x = self.cubes_pose.pose[0].position.x
+        cube_pose_y = self.cubes_pose.pose[0].position.y
+        cube_pose_z = self.cubes_pose.pose[0].position.z
+        self.cube_pose_lock.release()
+        self.gripper_pose_lock.release()
+        self.joints_lock.release()
+        return [joint_pos[0],joint_pos[1],joint_pos[2],joint_pos[3],joint_pos[4],joint_pos[5],joint_pos[6],gripper_pose_x,gripper_pose_y,gripper_pose_z,cube_pose_x,cube_pose_y,cube_pose_z]
+
     def getDist(self):
         position = self.getCurrentGripperPose()
         print "Current Gripper Position is %s" % position
